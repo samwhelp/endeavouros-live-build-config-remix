@@ -538,99 +538,6 @@ master_var_dump
 
 
 ##
-## ## Target OS / Util
-##
-
-core_chroot_package_control () {
-
-	core_chroot_run apt "$@"
-
-}
-
-core_chroot_run () {
-
-	local rootfs="${REF_TARGET_OS_ROOT_DIR_PATH}"
-
-	local i=1
-
-	for i in {1..5}; do
-
-		sudo env DEBIAN_FRONTEND=noninteractive chroot "${rootfs}" "${@}"
-
-		if [[ $? == 0 ]]; then
-			break
-		fi
-
-		sleep 1
-
-	done
-
-}
-
-endeavouros_target_os_mount_for_chroot () {
-
-	util_error_echo
-	util_error_echo "##"
-	util_error_echo "## ## Mount For Chroot"
-	util_error_echo "##"
-	util_error_echo
-
-	local rootfs="${REF_TARGET_OS_ROOT_DIR_PATH}"
-
-	core_target_os_mount_for_chroot "${rootfs}"
-
-}
-
-core_target_os_mount_for_chroot () {
-
-	local rootfs="${1}"
-
-	mount --bind /dev "${rootfs}/dev"
-	mount --bind /run  "${rootfs}/run"
-	#mount --bind /media  "${rootfs}/media"
-	mount -t devpts devpts "${rootfs}/dev/pts"
-	mount -t sysfs sysfs "${rootfs}/sys"
-	mount -t proc proc "${rootfs}/proc"
-	mount -t tmpfs tmpfs  "${rootfs}/dev/shm"
-	mount --bind /tmp "${rootfs}/tmp"
-
-	return 0
-}
-
-endeavouros_target_os_unmount_for_chroot () {
-
-	util_error_echo
-	util_error_echo "##"
-	util_error_echo "## ## Unmount For Chroot"
-	util_error_echo "##"
-	util_error_echo
-
-	local rootfs="${REF_TARGET_OS_ROOT_DIR_PATH}"
-
-	core_target_os_unmount_for_chroot "${rootfs}"
-
-}
-
-core_target_os_unmount_for_chroot () {
-
-	local rootfs="${1}"
-
-	#umount "${rootfs}/sys/firmware/efi/efivars"
-	umount "${rootfs}/sys"
-	umount "${rootfs}/dev/pts"
-	umount "${rootfs}/dev/shm"
-	umount "${rootfs}/dev"
-
-	umount "${rootfs}/run"
-	#umount "${rootfs}/media"
-	umount "${rootfs}/proc"
-	umount "${rootfs}/tmp"
-
-	return 0
-}
-
-
-##
 ## ## Endeavouros / Build ISO / Package Required For Build
 ##
 
@@ -646,9 +553,9 @@ endeavouros_build_iso_package_required () {
 
 
 	util_error_echo
-	util_error_echo pacman -S --needed --noconfirm archiso mkinitcpio-archiso
+	util_error_echo pacman -S --needed --noconfirm archiso mkinitcpio-archiso base-devel
 	util_error_echo
-	pacman -S --needed --noconfirm archiso mkinitcpio-archiso
+	pacman -S --needed --noconfirm archiso mkinitcpio-archiso base-devel
 
 	util_error_echo
 
@@ -657,67 +564,6 @@ endeavouros_build_iso_package_required () {
 }
 
 
-##
-## ## Endeavouros / Build ISO / Steps
-##
-
-endeavouros_build_iso_develop_test () {
-
-
-	util_error_echo
-	util_error_echo "##"
-	util_error_echo "## ## Run / endeavouros_build_iso_develop_test"
-	util_error_echo "##"
-	util_error_echo
-
-
-
-	endeavouros_build_iso_develop_test_prototype
-
-}
-
-endeavouros_build_iso_develop_test_prototype () {
-
-	util_error_echo
-	util_error_echo "##"
-	util_error_echo "## ## Run / endeavouros_build_iso_develop_test_prototype"
-	util_error_echo "##"
-	util_error_echo
-
-
-	#endeavouros_build_iso_package_required
-
-
-	#endeavouros_build_iso_create
-
-
-
-
-
-
-	return 0
-}
-
-
-endeavouros_build_iso_steps () {
-
-
-	util_error_echo
-	util_error_echo "##"
-	util_error_echo "## ## Run / endeavouros_build_iso_steps"
-	util_error_echo "##"
-	util_error_echo
-
-
-
-	endeavouros_build_iso_package_required
-
-
-	endeavouros_build_iso_create
-
-
-	return 0
-}
 
 
 ##
@@ -735,6 +581,7 @@ endeavouros_build_iso_prepare () {
 
 
 	endeavouros_build_iso_prepare_work_dir
+
 	endeavouros_build_iso_prepare_iso_profile
 
 
@@ -773,6 +620,9 @@ endeavouros_build_iso_prepare_work_dir () {
 	return 0
 }
 
+
+
+
 ##
 ## ## Endeavouros / Build ISO / Prepare / ISO Profile
 ##
@@ -787,7 +637,6 @@ endeavouros_build_iso_prepare_iso_profile () {
 
 		#return 0 ## for codeing
 
-		endeavouros_target_os_unmount_for_chroot
 
 		util_error_echo
 		util_error_echo rm -rf "${iso_profile_dir_path}"
@@ -867,6 +716,8 @@ endeavouros_build_iso_archive () {
 }
 
 
+
+
 ##
 ## ## Endeavouros / Build ISO / Create
 ##
@@ -900,6 +751,73 @@ endeavouros_build_iso_create () {
 
 	return 0
 }
+
+
+
+
+##
+## ## Endeavouros / Build ISO / Steps
+##
+
+endeavouros_build_iso_develop_test () {
+
+
+	util_error_echo
+	util_error_echo "##"
+	util_error_echo "## ## Run / endeavouros_build_iso_develop_test"
+	util_error_echo "##"
+	util_error_echo
+
+
+
+	endeavouros_build_iso_develop_test_prototype
+
+}
+
+endeavouros_build_iso_develop_test_prototype () {
+
+	util_error_echo
+	util_error_echo "##"
+	util_error_echo "## ## Run / endeavouros_build_iso_develop_test_prototype"
+	util_error_echo "##"
+	util_error_echo
+
+
+	#endeavouros_build_iso_package_required
+
+
+	#endeavouros_build_iso_create
+
+
+
+
+
+
+	return 0
+}
+
+
+endeavouros_build_iso_steps () {
+
+
+	util_error_echo
+	util_error_echo "##"
+	util_error_echo "## ## Run / endeavouros_build_iso_steps"
+	util_error_echo "##"
+	util_error_echo
+
+
+
+	endeavouros_build_iso_package_required
+
+
+	endeavouros_build_iso_create
+
+
+	return 0
+}
+
+
 
 
 ##
