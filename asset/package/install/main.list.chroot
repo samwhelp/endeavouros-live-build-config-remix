@@ -12,7 +12,7 @@
 
 
 ##
-## # fcitx5
+## ## fcitx5
 ##
 
 
@@ -80,3 +80,24 @@ fcitx5-chewing
 #fcitx5-anthy
 #fcitx5-skk
 #fcitx5-kkc
+
+
+
+
+##
+## ## variety
+##
+
+variety
+
+
+
+
+##
+## ## text editor
+##
+
+vim
+neovim
+micro
+nano
