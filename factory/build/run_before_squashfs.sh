@@ -42,12 +42,12 @@ ls /etc/skel/
 echo "--- end validate skel files ---"
 
 # Prepare livesession settings and user
-sed -i 's|#\(en_US\.UTF-8\)|\1|' "/etc/locale.gen"
-sed -i 's|#\(zh_TW\.UTF-8\)|\1|' "/etc/locale.gen"
-sed -i 's|#\(zh_CN\.UTF-8\)|\1|' "/etc/locale.gen"
-sed -i 's|#\(zh_HK\.UTF-8\)|\1|' "/etc/locale.gen"
-sed -i 's|#\(ja_JP\.UTF-8\)|\1|' "/etc/locale.gen"
-sed -i 's|#\(ko_KR\.UTF-8\)|\1|' "/etc/locale.gen"
+sed -i 's/#\(en_US\.UTF-8\)/\1/' "/etc/locale.gen"
+sed -i 's/#\(zh_TW\.UTF-8\)/\1/' "/etc/locale.gen"
+sed -i 's/#\(zh_CN\.UTF-8\)/\1/' "/etc/locale.gen"
+sed -i 's/#\(zh_HK\.UTF-8\)/\1/' "/etc/locale.gen"
+sed -i 's/#\(ja_JP\.UTF-8\)/\1/' "/etc/locale.gen"
+sed -i 's/#\(ko_KR\.UTF-8\)/\1/' "/etc/locale.gen"
 locale-gen
 #ln -sf '/usr/share/zoneinfo/UTC' '/etc/localtime'
 ln -sf '/usr/share/zoneinfo/Asia/Taipei' '/etc/localtime'
@@ -62,7 +62,7 @@ cp "/root/liveuser.png" "/var/lib/AccountsService/icons/liveuser"
 rm "/root/liveuser.png"
 
 # Remove liveuser skel to clean for target skel
-pacman -Rns --noconfirm -- "endeavouros-skel-liveuser"
+#pacman -Rns --noconfirm -- "endeavouros-skel-liveuser"
 rm -rf "/root/endeavouros-skel-liveuser"
 
 # setup theming for root user
