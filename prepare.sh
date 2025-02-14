@@ -529,9 +529,9 @@ endeavouros_build_iso_overlay () {
 
 	endeavouros_factory_build_config_overlay
 
-	#endeavouros_factory_master_os_file_overlay
+	endeavouros_factory_master_os_file_overlay
 
-	#endeavouros_master_os_file_overlay
+	endeavouros_master_os_file_overlay
 
 	#endeavouros_master_os_package_overlay
 
@@ -573,6 +573,7 @@ util_dir_file_overlay () {
 
 
 
+
 ##
 ## ## Endeavouros / Build ISO / Overlay / Build Config
 ##
@@ -596,6 +597,61 @@ endeavouros_factory_build_config_overlay () {
 
 	return 0
 }
+
+
+
+
+##
+## ## Endeavouros / Build ISO / Overlay / Factory Master OS File
+##
+
+endeavouros_factory_master_os_file_overlay () {
+
+
+	local source_dir_path="${REF_SOURCE_FACTORY_OVERLAY_MASTER_OS_DIR_PATH}"
+	local target_dir_path="${REF_TARGET_FACTORY_OVERLAY_MASTER_OS_DIR_PATH}"
+
+
+	util_error_echo
+	util_error_echo "##"
+	util_error_echo "## ## Endeavouros / Build ISO / Overlay / Factory Master OS File"
+	util_error_echo "##"
+	util_error_echo
+
+
+	util_dir_file_overlay "${source_dir_path}" "${target_dir_path}"
+
+
+	return 0
+}
+
+
+
+
+##
+## ## Endeavouros / Build ISO / Overlay / Master OS File
+##
+
+endeavouros_master_os_file_overlay () {
+
+
+	local source_dir_path="${REF_SOURCE_OVERLAY_MASTER_OS_DIR_PATH}"
+	local target_dir_path="${REF_TARGET_OVERLAY_MASTER_OS_DIR_PATH}"
+
+
+	util_error_echo
+	util_error_echo "##"
+	util_error_echo "## ## Endeavouros / Build ISO / Overlay / Master OS File"
+	util_error_echo "##"
+	util_error_echo
+
+
+	util_dir_file_overlay "${source_dir_path}" "${target_dir_path}"
+
+
+	return 0
+}
+
 
 
 
