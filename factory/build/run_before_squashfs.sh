@@ -66,7 +66,7 @@ rm "/root/liveuser.png"
 rm -rf "/root/endeavouros-skel-liveuser"
 
 # setup theming for root user
-cp -a "/root/root-theme" "/root/.config"
+#cp -a "/root/root-theme" "/root/.config"
 rm -R "/root/root-theme"
 
 # Add builddate to motd:
