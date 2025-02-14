@@ -205,35 +205,6 @@ master_var_init () {
 
 
 	##
-	## ## Target OS / Path
-	##
-
-	REF_TARGET_OS_ROOT_DIR_NAME="chroot"
-	REF_TARGET_OS_ROOT_DIR_PATH="${REF_ISO_PROFILE_DIR_PATH}/${REF_TARGET_OS_ROOT_DIR_NAME}"
-
-
-	REF_TARGET_OS_ARCHIVE_FILE_NAME="filesystem.squashfs"
-	REF_TARGET_OS_ARCHIVE_FILE_PATH="${REF_ISO_PROFILE_DIR_PATH}/${REF_TARGET_OS_ARCHIVE_FILE_NAME}"
-
-
-	##
-	## ## Target OS / debootstrap args
-	##
-
-	#DEFAULT_BUILD_ARCH="amd64"
-	#REF_BUILD_ARCH="${REF_BUILD_ARCH:=$DEFAULT_BUILD_ARCH}"
-
-	DEFAULT_BUILD_SUITE="bookworm"
-	REF_BUILD_SUITE="${REF_BUILD_SUITE:=$DEFAULT_BUILD_SUITE}"
-
-	DEFAULT_PACKAGE_REPO_URL="http://deb.debian.org/debian"
-	REF_PACKAGE_REPO_URL="${REF_PACKAGE_REPO_URL:=$DEFAULT_PACKAGE_REPO_URL}"
-
-	DEFAULT_BUILD_INCLUDE="debian-ports-archive-keyring,debian-archive-keyring,live-task-recommended,live-task-standard,live-config-systemd,live-boot"
-	REF_BUILD_INCLUDE="${REF_BUILD_INCLUDE:=$DEFAULT_BUILD_INCLUDE}"
-
-
-	##
 	## ## Overlay / Path
 	##
 
@@ -268,27 +239,14 @@ master_var_init () {
 	REF_HOOK_DIR_PATH="${REF_PLAN_FACTORY_DIR_PATH}/${REF_HOOK_DIR_NAME}"
 
 
-	##
-	## ## ISO Template / Path
-	##
-
-	REF_ISO_TEMPLATE_SOURCE_DIR_NAME="iso-template"
-	REF_ISO_TEMPLATE_SOURCE_DIR_PATH="${REF_PLAN_FACTORY_DIR_PATH}/${REF_ISO_TEMPLATE_SOURCE_DIR_NAME}"
-
-
-	REF_ISO_TEMPLATE_TARGET_DIR_NAME="binary"
-	REF_ISO_TEMPLATE_TARGET_DIR_PATH="${REF_ISO_PROFILE_DIR_PATH}/${REF_ISO_TEMPLATE_TARGET_DIR_NAME}"
-
 
 	##
 	## ## Build Live Config
 	##
 
-	REF_BUILD_LIVE_CONFIG_ROOT_DIR_NAME="master-config"
-	REF_BUILD_LIVE_CONFIG_ROOT_DIR_PATH="${REF_ISO_PROFILE_DIR_PATH}/${REF_BUILD_LIVE_CONFIG_ROOT_DIR_NAME}"
+	REF_BUILD_LIVE_CONFIG_DIR_NAME="${REF_ISO_PROFILE_DIR_NAME}"
+	REF_BUILD_LIVE_CONFIG_DIR_PATH="${REF_ISO_PROFILE_DIR_PATH}"
 
-	REF_BUILD_LIVE_CONFIG_DIR_NAME="common"
-	REF_BUILD_LIVE_CONFIG_DIR_PATH="${REF_BUILD_LIVE_CONFIG_ROOT_DIR_PATH}/${REF_BUILD_LIVE_CONFIG_DIR_NAME}"
 
 	##
 	## ## Build Live Config / Factory Overlay
@@ -414,36 +372,6 @@ master_var_dump () {
 
 
 	##
-	## ## Target OS / Path
-	##
-
-	util_debug_echo
-	util_debug_echo "REF_TARGET_OS_ROOT_DIR_NAME=${REF_TARGET_OS_ROOT_DIR_NAME}"
-	util_debug_echo "REF_TARGET_OS_ROOT_DIR_PATH=${REF_TARGET_OS_ROOT_DIR_PATH}"
-
-	util_debug_echo
-	util_debug_echo "REF_TARGET_OS_ARCHIVE_FILE_NAME=${REF_TARGET_OS_ARCHIVE_FILE_NAME}"
-	util_debug_echo "REF_TARGET_OS_ARCHIVE_FILE_PATH=${REF_TARGET_OS_ARCHIVE_FILE_PATH}"
-
-
-	##
-	## ## Target OS / debootstrap args
-	##
-
-	util_debug_echo
-	util_debug_echo "DEFAULT_BUILD_SUITE=${DEFAULT_BUILD_SUITE}"
-	util_debug_echo "REF_BUILD_SUITE=${REF_BUILD_SUITE}"
-
-	util_debug_echo
-	util_debug_echo "DEFAULT_PACKAGE_REPO_URL=${DEFAULT_PACKAGE_REPO_URL}"
-	util_debug_echo "REF_PACKAGE_REPO_URL=${REF_PACKAGE_REPO_URL}"
-
-	util_debug_echo
-	util_debug_echo "DEFAULT_BUILD_INCLUDE=${DEFAULT_BUILD_INCLUDE}"
-	util_debug_echo "REF_BUILD_INCLUDE=${REF_BUILD_INCLUDE}"
-
-
-	##
 	## ## Overlay / Path
 	##
 
@@ -482,19 +410,15 @@ master_var_dump () {
 	util_debug_echo "REF_HOOK_DIR_PATH=${REF_HOOK_DIR_PATH}"
 
 
+
+
 	##
-	## ## ISO Template / Path
+	## ## Build Live Config
 	##
 
 	util_debug_echo
-	util_debug_echo "REF_ISO_TEMPLATE_SOURCE_DIR_NAME=${REF_ISO_TEMPLATE_SOURCE_DIR_NAME}"
-	util_debug_echo "REF_ISO_TEMPLATE_SOURCE_DIR_PATH=${REF_ISO_TEMPLATE_SOURCE_DIR_PATH}"
-
-	util_debug_echo
-	util_debug_echo "REF_ISO_TEMPLATE_TARGET_DIR_NAME=${REF_ISO_TEMPLATE_TARGET_DIR_NAME}"
-	util_debug_echo "REF_ISO_TEMPLATE_TARGET_DIR_PATH=${REF_ISO_TEMPLATE_TARGET_DIR_PATH}"
-
-
+	util_debug_echo "REF_BUILD_LIVE_CONFIG_DIR_NAME=${REF_ISO_PROFILE_DIR_NAME}"
+	util_debug_echo "REF_BUILD_LIVE_CONFIG_DIR_PATH=${REF_ISO_PROFILE_DIR_PATH}"
 
 
 
@@ -533,6 +457,41 @@ master_var_dump () {
 master_var_init
 
 master_var_dump
+
+
+
+
+
+##
+## ## Endeavouros / Build ISO / Overlay
+##
+
+endeavouros_build_iso_overlay () {
+
+
+	util_error_echo
+	util_error_echo "##"
+	util_error_echo "## ## Endeavouros / Build ISO / Overlay"
+	util_error_echo "##"
+	util_error_echo
+
+	#endeavouros_factory_master_os_file_overlay
+
+	#endeavouros_master_os_file_overlay
+
+	#endeavouros_master_os_package_overlay
+
+	#endeavouros_master_os_installer_overlay
+
+	#endeavouros_live_build_config_hook_overlay
+
+
+
+
+
+	return 0
+}
+
 
 
 
@@ -740,7 +699,7 @@ endeavouros_build_iso_create () {
 	##
 	## ## overlay
 	##
-	#endeavouros_build_iso_overlay
+	endeavouros_build_iso_overlay
 
 
 	##
@@ -782,6 +741,7 @@ endeavouros_build_iso_develop_test_prototype () {
 	util_error_echo "##"
 	util_error_echo
 
+	endeavouros_build_iso_overlay
 
 	#endeavouros_build_iso_package_required
 
