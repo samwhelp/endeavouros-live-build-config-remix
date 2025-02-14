@@ -1099,8 +1099,8 @@ endeavouros_build_iso_archive () {
 	util_error_echo
 	#"${build_agent}" ${build_agent_args} 2>&1 | tee "eosiso_$(date -u +'%Y.%m.%d-%H:%M').log"
 	#./mkarchiso -v "." 2>&1 | tee "eosiso_$(date -u +'%Y.%m.%d-%H:%M').log"
-	#"${build_agent}" ${build_agent_args}
-	run_and_log ${build_agent} ${build_agent_args}
+	"${build_agent}" ${build_agent_args}
+	#run_and_log ${build_agent} ${build_agent_args}
 
 
 
