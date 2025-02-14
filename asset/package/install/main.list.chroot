@@ -101,3 +101,13 @@ vim
 neovim
 micro
 nano
+
+
+
+
+##
+## ## shell
+##
+
+bash-completion
+fzf
