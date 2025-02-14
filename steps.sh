@@ -8,6 +8,8 @@
 ##
 
 
+
+
 ##
 ## ## Main / Init
 ##
@@ -18,6 +20,8 @@ REF_CMD_FILE_NAME="$(basename "$0")"
 
 DEFAULT_IS_DEBUG="false"
 IS_DEBUG="${IS_DEBUG:=$DEFAULT_IS_DEBUG}"
+
+
 
 
 ##
@@ -52,6 +56,22 @@ is_not_debug () {
 
 }
 
+run_and_log () {
+	## From: https://gitlab.com/kalilinux/build-scripts/kali-live/-/blob/main/build.sh?ref_type=heads#L69-L81
+	##if [ -n "${IS_VERBOSE}" ] || [ -n "${IS_DEBUG}" ]; then
+	if [[ "${IS_VERBOSE}" == "true" ]] || [[ "${IS_DEBUG}" == "true" ]]; then
+		printf "RUNNING:" >&2
+		for _ in "$@"; do
+			[[ $_ =~ [[:space:]] ]] && printf " '%s'" "$_" || printf " %s" "$_"
+		done >&2
+		printf "\n" >&2
+		"$@" 2>&1 | tee -a "${REF_BUILD_LOG_FILE_PATH}"
+	else
+		"$@" >>"${REF_BUILD_LOG_FILE_PATH}" 2>&1
+	fi
+	return ${?}
+}
+
 
 ##
 ## ## Main / Variable
@@ -65,6 +85,15 @@ main_var_init () {
 
 	REF_MAIN_SUBJECT_NAME="endeavouros"
 	REF_PLAN_DIR_PATH="${REF_BASE_DIR_PATH}"
+
+
+	DEFAULT_IS_VERBOSE="true"
+	IS_VERBOSE="${IS_VERBOSE:=$DEFAULT_IS_VERBOSE}"
+
+
+	REF_BUILD_LOG_FILE_NAME="build.log"
+	REF_BUILD_LOG_FILE_PATH="${REF_PLAN_DIR_PATH}/${REF_BUILD_LOG_FILE_NAME}"
+
 
 
 
@@ -121,6 +150,17 @@ main_var_dump () {
 	util_debug_echo
 	util_debug_echo "DEFAULT_IS_DEBUG=${DEFAULT_IS_DEBUG}"
 	util_debug_echo "IS_DEBUG=${IS_DEBUG}"
+
+
+
+
+	util_debug_echo
+	util_debug_echo "DEFAULT_IS_VERBOSE=${DEFAULT_IS_VERBOSE}"
+	util_debug_echo "IS_VERBOSE=${IS_VERBOSE}"
+
+	util_debug_echo
+	util_debug_echo "REF_BUILD_LOG_FILE_NAME=${REF_BUILD_LOG_FILE_NAME}"
+	util_debug_echo "REF_BUILD_LOG_FILE_PATH=${REF_BUILD_LOG_FILE_PATH}"
 
 
 
@@ -1059,7 +1099,9 @@ endeavouros_build_iso_archive () {
 	util_error_echo
 	#"${build_agent}" ${build_agent_args} 2>&1 | tee "eosiso_$(date -u +'%Y.%m.%d-%H:%M').log"
 	#./mkarchiso -v "." 2>&1 | tee "eosiso_$(date -u +'%Y.%m.%d-%H:%M').log"
-	"${build_agent}" ${build_agent_args}
+	#"${build_agent}" ${build_agent_args}
+	run_and_log ${build_agent} ${build_agent_args}
+
 
 
 
