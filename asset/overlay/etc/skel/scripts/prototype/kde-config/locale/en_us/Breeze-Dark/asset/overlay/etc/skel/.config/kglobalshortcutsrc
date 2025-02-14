@@ -54,6 +54,7 @@ Decrease Opacity=Meta+;,none,Decrease Opacity of Active Window by 5 %
 Expose=Meta+Tab\tCtrl+F9,Ctrl+F9,Toggle Present Windows (Current desktop)
 ExposeAll=Meta+C\tCtrl+F10\tLaunch (C),Ctrl+F10\tLaunch (C),Toggle Present Windows (All desktops)
 ExposeClass=Ctrl+F7,Ctrl+F7,Toggle Present Windows (Window class)
+Grid View=Meta+G,Meta+G,Toggle Grid View
 Increase Opacity=Meta+',none,Increase Opacity of Active Window by 5 %
 Invert Screen Colors=none,none,Invert Screen Colors
 Kill Window=Meta+Ctrl+Esc,Meta+Ctrl+Esc,Kill Window
