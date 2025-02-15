@@ -828,7 +828,7 @@ endeavouros_build_iso_prepare_iso_profile () {
 		util_error_echo
 		util_error_echo rm -rf "${iso_profile_dir_path}"
 		util_error_echo
-		rm -rf "${iso_profile_dir_path}"
+		#rm -rf "${iso_profile_dir_path}"
 
 
 

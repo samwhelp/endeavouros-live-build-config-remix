@@ -914,8 +914,9 @@ endeavouros_build_iso_prepare_work_dir () {
 
 endeavouros_build_iso_prepare_iso_profile () {
 
+	#endeavouros_build_iso_prepare_iso_profile_by_git_clone
 
-	endeavouros_build_iso_prepare_iso_profile_by_git_clone
+	endeavouros_build_iso_prepare_iso_profile_by_download_archive
 
 	return 0
 }
@@ -934,7 +935,7 @@ endeavouros_build_iso_prepare_iso_profile_by_git_clone () {
 		util_error_echo
 		util_error_echo rm -rf "${iso_profile_dir_path}"
 		util_error_echo
-		#rm -rf "${iso_profile_dir_path}"
+		rm -rf "${iso_profile_dir_path}"
 
 
 
@@ -945,6 +946,96 @@ endeavouros_build_iso_prepare_iso_profile_by_git_clone () {
 	util_error_echo git clone "${iso_profile_repo_git_url}" "${iso_profile_dir_path}"
 	util_error_echo
 	git clone "${iso_profile_repo_git_url}" "${iso_profile_dir_path}"
+
+
+	return 0
+}
+
+endeavouros_build_iso_prepare_iso_profile_by_download_archive () {
+
+	local iso_profile_repo_archive_url="${REF_ISO_PROFILE_REPO_ARCHIVE_URL}"
+	local iso_profile_dir_path="${REF_ISO_PROFILE_DIR_PATH}"
+	local work_dir_path="${REF_PLAN_WORK_DIR_PATH}"
+	local archive_save_file_path="${work_dir_path}/main.tar.gz"
+	local archive_extract_dir_path="${work_dir_path}/EndeavourOS-ISO-main"
+
+
+
+
+	##
+	## ## Clean Old
+	##
+
+	if [[ -d "${iso_profile_dir_path}" ]]; then
+
+		#return 0 ## for codeing
+
+
+		util_error_echo
+		util_error_echo rm -rf "${iso_profile_dir_path}"
+		util_error_echo
+		rm -rf "${iso_profile_dir_path}"
+
+
+	fi
+
+
+	if [[ -d "${archive_extract_dir_path}" ]]; then
+
+		util_error_echo
+		util_error_echo rm -rf "${archive_extract_dir_path}"
+		util_error_echo
+		rm -rf "${archive_extract_dir_path}"
+
+	fi
+
+
+	if [[ -e "${archive_save_file_path}" ]]; then
+
+		util_error_echo
+		util_error_echo rm -f "${archive_save_file_path}"
+		util_error_echo
+		rm -f "${archive_save_file_path}"
+
+	fi
+
+
+
+
+	##
+	## ## Download
+	##
+
+	util_error_echo
+	util_error_echo wget -c "${iso_profile_repo_archive_url}" -O "${archive_save_file_path}"
+	util_error_echo
+	wget -c "${iso_profile_repo_archive_url}" -O "${archive_save_file_path}"
+
+
+
+
+	##
+	## ## Extract
+	##
+
+	util_error_echo
+	util_error_echo tar -C "${work_dir_path}" -xf "${archive_save_file_path}"
+	util_error_echo
+	tar -C "${work_dir_path}" -xf "${archive_save_file_path}"
+
+
+
+
+	##
+	## ## Final
+	##
+
+	util_error_echo
+	util_error_echo mv "${archive_extract_dir_path}" "${iso_profile_dir_path}"
+	util_error_echo
+	mv "${archive_extract_dir_path}" "${iso_profile_dir_path}"
+
+
 
 
 	return 0
@@ -1075,7 +1166,10 @@ endeavouros_build_iso_develop_test_prototype () {
 	util_error_echo "##"
 	util_error_echo
 
-	endeavouros_build_iso_overlay
+
+	#endeavouros_build_iso_prepare_iso_profile_by_download_archive
+
+	#endeavouros_build_iso_overlay
 
 	#endeavouros_build_iso_package_required
 
@@ -1118,10 +1212,27 @@ endeavouros_build_iso_steps () {
 ## ## Endeavouros / Build ISO / Start
 ##
 
+
+##
+## ## Example
+##
+## run
+##
+## ``` sh
+## REF_MAIN_RUN=test ./prepare.sh
+## ```
+##
+## run
+##
+## ``` sh
+## IS_DEBUG=true REF_MAIN_RUN=test ./prepare.sh
+## ```
+##
+
 endeavouros_build_iso_start () {
 
-	main_signal_bind
 
+	main_signal_bind
 
 
 	local main_run="${REF_MAIN_RUN}"
