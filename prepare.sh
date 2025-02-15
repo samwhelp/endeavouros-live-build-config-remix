@@ -718,7 +718,7 @@ endeavouros_master_os_package_overlay () {
 	##
 
 	util_error_echo
-	util_error_echo 'cat "${source_file_path}" >> "${target_file_path}"'
+	util_error_echo cat "${source_file_path}" >> "${target_file_path}"
 	util_error_echo
 	cat "${source_file_path}" >> "${target_file_path}"
 
