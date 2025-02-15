@@ -88,6 +88,9 @@ rm -rf "/root/packages/"
 #systemctl enable intel.service
 systemctl set-default multi-user.target
 
+## enable sddm
+ln -sf /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
+
 # Set wallpaper for live-session and original for installed system
 mv "endeavouros-wallpaper.png" "/etc/calamares/files/endeavouros-wallpaper.png"
 mv "/root/livewall.png" "/usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png"
