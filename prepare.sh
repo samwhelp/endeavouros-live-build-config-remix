@@ -908,6 +908,14 @@ endeavouros_build_iso_prepare_work_dir () {
 
 endeavouros_build_iso_prepare_iso_profile () {
 
+
+	endeavouros_build_iso_prepare_iso_profile_by_git_clone
+
+	return 0
+}
+
+endeavouros_build_iso_prepare_iso_profile_by_git_clone () {
+
 	local iso_profile_repo_git_url="${REF_ISO_PROFILE_REPO_GIT_URL}"
 	local iso_profile_dir_path="${REF_ISO_PROFILE_DIR_PATH}"
 
