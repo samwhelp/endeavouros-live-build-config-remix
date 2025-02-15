@@ -5,15 +5,14 @@
 # ISO-NEXT specific cleanup removals and additions (08-2021 + 10-2021) @killajoe and @manuel
 # refining and changes november 2021 @killajoe and @manuel
 
-#script_path=$(readlink -f "${0%/*}")
-script_path="$(cd -- "$(dirname -- "$0")" ; pwd)"
+script_path=$(readlink -f "${0%/*}")
 work_dir="work"
 
 # Adapted from AIS. An excellent bit of code!
 # all pathes must be in quotation marks "path/to/file/or/folder" for now.
 
 arch_chroot() {
-	arch-chroot "${script_path}/${work_dir}/x86_64/airootfs" /bin/bash -c "${1}"
+    arch-chroot "${script_path}/${work_dir}/x86_64/airootfs" /bin/bash -c "${1}"
 }
 
 do_merge() {
@@ -43,16 +42,9 @@ ls /etc/skel/
 echo "--- end validate skel files ---"
 
 # Prepare livesession settings and user
-sed -i 's|#\(en_US\.UTF-8\)|\1|' "/etc/locale.gen"
-sed -i 's|#\(zh_TW\.UTF-8\)|\1|' "/etc/locale.gen"
-sed -i 's|#\(zh_CN\.UTF-8\)|\1|' "/etc/locale.gen"
-sed -i 's|#\(zh_HK\.UTF-8\)|\1|' "/etc/locale.gen"
-sed -i 's|#\(ja_JP\.UTF-8\)|\1|' "/etc/locale.gen"
-sed -i 's|#\(ko_KR\.UTF-8\)|\1|' "/etc/locale.gen"
+sed -i 's/#\(en_US\.UTF-8\)/\1/' "/etc/locale.gen"
 locale-gen
-#ln -sf '/usr/share/zoneinfo/UTC' '/etc/localtime'
-ln -sf '/usr/share/zoneinfo/Asia/Taipei' '/etc/localtime'
-echo 'Asia/Taipei' > '/etc/timezone'
+ln -sf "/usr/share/zoneinfo/UTC" "/etc/localtime"
 
 # Set root permission and shell
 usermod -s /usr/bin/bash root
@@ -63,11 +55,11 @@ cp "/root/liveuser.png" "/var/lib/AccountsService/icons/liveuser"
 rm "/root/liveuser.png"
 
 # Remove liveuser skel to clean for target skel
-#pacman -Rns --noconfirm -- "endeavouros-skel-liveuser"
+pacman -Rns --noconfirm -- "endeavouros-skel-liveuser"
 rm -rf "/root/endeavouros-skel-liveuser"
 
 # setup theming for root user
-#cp -a "/root/root-theme" "/root/.config"
+cp -a "/root/root-theme" "/root/.config"
 rm -R "/root/root-theme"
 
 # Add builddate to motd:
@@ -87,9 +79,6 @@ rm -rf "/root/packages/"
 #systemctl enable vboxservice.service vmtoolsd.service vmware-vmblock-fuse.service
 #systemctl enable intel.service
 systemctl set-default multi-user.target
-
-## enable sddm
-ln -sf /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
 
 # Set wallpaper for live-session and original for installed system
 mv "endeavouros-wallpaper.png" "/etc/calamares/files/endeavouros-wallpaper.png"
