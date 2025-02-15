@@ -84,16 +84,32 @@ pacman -U --noconfirm --needed -- "/root/packages/"*".pkg.tar.zst"
 rm -rf "/root/packages/"
 
 
-## enable sddm
-ln -sf /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
+##
+## ## Enable systemd services
+##
 
-
-# Enable systemd services
 # --> now in airootfs/etc/systemd/system/multi-user.target.wants
 #systemctl enable NetworkManager.service systemd-timesyncd.service bluetooth.service firewalld.service
 #systemctl enable vboxservice.service vmtoolsd.service vmware-vmblock-fuse.service
 #systemctl enable intel.service
-systemctl set-default multi-user.target
+
+
+## enable sddm
+ln -sf /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
+
+
+##
+## ## start mode
+##
+
+## Refer: https://www.cyberciti.biz/faq/switch-boot-target-to-text-gui-in-systemd-linux/
+
+## * text mode
+#systemctl set-default multi-user.target
+
+## * gui mode
+systemctl set-default graphical.target
+
 
 # Set wallpaper for live-session and original for installed system
 mv "endeavouros-wallpaper.png" "/etc/calamares/files/endeavouros-wallpaper.png"
