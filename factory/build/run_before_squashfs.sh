@@ -9,6 +9,8 @@
 script_path="$(cd -- "$(dirname -- "$0")" ; pwd)"
 work_dir="work"
 
+touch "${script_path}/${work_dir}/extra._run_before_squashfs"
+
 # Adapted from AIS. An excellent bit of code!
 # all pathes must be in quotation marks "path/to/file/or/folder" for now.
 
@@ -81,15 +83,17 @@ echo "----- end of content of /root/packages -----"
 pacman -U --noconfirm --needed -- "/root/packages/"*".pkg.tar.zst"
 rm -rf "/root/packages/"
 
+
+## enable sddm
+ln -sf /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
+
+
 # Enable systemd services
 # --> now in airootfs/etc/systemd/system/multi-user.target.wants
 #systemctl enable NetworkManager.service systemd-timesyncd.service bluetooth.service firewalld.service
 #systemctl enable vboxservice.service vmtoolsd.service vmware-vmblock-fuse.service
 #systemctl enable intel.service
 systemctl set-default multi-user.target
-
-## enable sddm
-ln -sf /usr/lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
 
 # Set wallpaper for live-session and original for installed system
 mv "endeavouros-wallpaper.png" "/etc/calamares/files/endeavouros-wallpaper.png"
