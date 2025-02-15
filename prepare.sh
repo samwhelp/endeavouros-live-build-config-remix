@@ -203,6 +203,9 @@ master_var_init () {
 
 	REF_ISO_PROFILE_REPO_GIT_URL="https://github.com/endeavouros-team/EndeavourOS-ISO.git"
 
+	#REF_ISO_PROFILE_REPO_ARCHIVE_URL="https://github.com/endeavouros-team/EndeavourOS-ISO/archive/refs/heads/main.zip"
+	REF_ISO_PROFILE_REPO_ARCHIVE_URL="https://github.com/endeavouros-team/EndeavourOS-ISO/archive/refs/heads/main.tar.gz"
+
 
 	##
 	## ## Overlay / Path
@@ -389,6 +392,9 @@ master_var_dump () {
 
 	util_debug_echo
 	util_debug_echo "REF_ISO_PROFILE_REPO_GIT_URL=${REF_ISO_PROFILE_REPO_GIT_URL}"
+	util_debug_echo "REF_ISO_PROFILE_REPO_ARCHIVE_URL=${REF_ISO_PROFILE_REPO_ARCHIVE_URL}"
+
+
 
 
 	##
