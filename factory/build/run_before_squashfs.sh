@@ -9,7 +9,6 @@
 script_path="$(cd -- "$(dirname -- "$0")" ; pwd)"
 work_dir="work"
 
-touch "${script_path}/${work_dir}/extra._run_before_squashfs"
 
 # Adapted from AIS. An excellent bit of code!
 # all pathes must be in quotation marks "path/to/file/or/folder" for now.
@@ -157,4 +156,8 @@ EOF
 ########## STARTS HERE ##########
 #################################
 
+touch "${script_path}/${work_dir}/extra._run_before_squashfs.start"
+
 do_merge
+
+touch "${script_path}/${work_dir}/extra._run_before_squashfs.done"
