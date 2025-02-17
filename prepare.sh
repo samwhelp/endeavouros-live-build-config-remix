@@ -762,7 +762,7 @@ endeavouros_master_os_file_final_adjust () {
 
 
 	util_error_echo
-	util_error_echo rm -f "${target_dir_path}/root/endeavouros-skel-liveuser/src/etc/skel/.bash_profile"
+	util_error_echo rm -f "${target_dir_path}/root/endeavouros-skel-liveuser/src/etc/skel/.nanorc"
 	util_error_echo
 	rm -f "${target_dir_path}/root/endeavouros-skel-liveuser/src/etc/skel/.nanorc"
 
